@@ -12,7 +12,31 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
+});
+Route::get('/masuk', function () {
+    return view('beranda');
+});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+Route::get('/kegiatan', function () {
+    return view('kegiatan');
+});
+Route::get('/formkegiatan', function () {
+    return view('formKegiatan');
+});
+Route::get('/detail', function () {
+    return view('detail');
+});
+Route::get('/ubahsandi', function () {
+    return view('ubahSandi');
+});
+Route::get('/akunpengguna', function () {
+    return view('akunPengguna');
+});
+Route::get('/peserta', function () {
+    return view('peserta');
 });
 
 Auth::routes();

@@ -23,6 +23,14 @@ Vue.use(Vuetify)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('beranda', require('./components/Beranda.vue').default);
+Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('kegiatan', require('./components/Kegiatan.vue').default);
+Vue.component('formkegiatan', require('./components/FormKegiatan.vue').default);
+Vue.component('ubahsandi', require('./components/UbahSandi.vue').default);
+Vue.component('detail', require('./components/Detail.vue').default);
+Vue.component('akunpengguna', require('./components/AkunPengguna.vue').default);
+Vue.component('peserta', require('./components/Peserta.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,4 +41,10 @@ const vuetify = new Vuetify();
 const app = new Vue({
     el: '#app',
     vuetify,
+    data: ()=>({
+        fad:false,
+        drawer: null,
+        show1: false, //*password login
+        loading: false, //* loading halaman
+    })
 });
