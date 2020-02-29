@@ -22,7 +22,7 @@ class CreatePesertasTable extends Migration
             $table->string('hp');
             $table->string('pekerjaan');
             $table->string('ket');
-            $table->string('id_kegiatan')->unsigned();
+            $table->bigInteger('id_kegiatan')->unsigned();
             $table->foreign('id_kegiatan')->references('id_kegiatan')->on('kegiatans');
             $table->timestamps();
         });

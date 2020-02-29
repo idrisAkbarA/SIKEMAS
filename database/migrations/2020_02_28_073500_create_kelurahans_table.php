@@ -14,7 +14,7 @@ class CreateKelurahansTable extends Migration
     public function up()
     {
         Schema::create('kelurahans', function (Blueprint $table) {
-            $table->bigIncrements('kel_id')->unique();
+            $table->bigIncrements('kel_id')->unique()->unsigned();
             $table->string('nama_kel');
             $table->timestamps();
         });
