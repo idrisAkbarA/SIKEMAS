@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\kelurahan;
+use App\User;
 use Illuminate\Http\Request;
 
 class KelurahanController extends Controller
@@ -14,7 +15,7 @@ class KelurahanController extends Controller
      */
     public function index()
     {
-        //
+        return view('akunPengguna')->with('akun',User::all());
     }
 
     /**

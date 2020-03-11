@@ -35,7 +35,7 @@
                 <v-container fluid fill-height>
                     <v-layout align-center justify-center>
                         <v-flex xs12 sm12 md6>
-                            <v-form method="" action="/masuk" lazy-validation>
+                            <v-form method="" action="/dashboard" lazy-validation>
                                 <h2 class="white--text mb-4">Masuk</h2>
                                 <v-text-field {{-- background-color="white" --}} color="white" label="Nama Pengguna"
                                     name="name" filled prepend-inner-icon="account_box" type="text" dark required></v-text-field>

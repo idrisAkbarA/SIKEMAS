@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-<akunpengguna data="{{$akun}}"></akunpengguna>
+<akunpengguna></akunpengguna>
 @endsection
 
 <style>

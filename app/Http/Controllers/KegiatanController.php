@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\kegiatan;
+use App\peserta;
+
 use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
@@ -14,7 +16,7 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard')->with('kegiatan',kegiatan::all());
     }
 
     /**
@@ -22,7 +24,18 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(request $request)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(request $request)
     {
         //
     }
@@ -34,8 +47,55 @@ class KegiatanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        
+        try {
+            //code...
+        $id_kel = "Air Hitam"; //*ganti isi variable kelak dengan session
+        $input = $request;
+        $kegiatan = new kegiatan;
+        $kegiatan->nama_kel = $id_kel;
+        $kegiatan->nama_kegiatan = $input->nama_kegiatan;
+        $kegiatan->tanggal_dari = $input->tanggal_dari;
+        $kegiatan->tanggal_sampai = $input->tanggal_sampai;
+        $kegiatan->tujuan = $input->tujuan;
+        $kegiatan->tempat_kegiatan = $input->tempat_kegiatan;
+        $kegiatan->penyelenggara = $input->penyelenggara;
+        $kegiatan->penanggung_jawab = $input->penanggung_jawab;
+        $kegiatan->latar_belakang = $input->latar_belakang;
+        $kegiatan->trainer = $input->trainer;
+        $kegiatan->cp_trainer = $input->cp_trainer;
+        $kegiatan->uang_saku = $input->uang_saku;
+        $kegiatan->anggaran = $input->anggaran;
+        $kegiatan->outcome = $input->outcome;
+        $kegiatan->foto1 = $input->foto1;
+        $kegiatan->foto2 = $input->foto2;
+        $kegiatan->foto3 = $input->foto3;
+        $kegiatan->foto4 = $input->foto4;
+        $kegiatan->peserta = json_encode($input->peserta,true);
+        $kegiatan->save();
+
+        
+        $pesertaTemp = $input->peserta;
+        $nikOnly=[];
+        for ($i=0; $i < sizeof($pesertaTemp) ; $i++) { 
+            // array_push($nikOnly, $pesertaTemp[$i]['nik']);
+            $peserta = new peserta;
+            $peserta->nik = $pesertaTemp[$i]['nik'];
+            $peserta->nama = $pesertaTemp[$i]['nama'];
+            $peserta->jk = $pesertaTemp[$i]['jk'];
+            $peserta->alamat = $pesertaTemp[$i]['alamat'];
+            $peserta->pekerjaan = $pesertaTemp[$i]['pekerjaan'];
+            $peserta->hp = $pesertaTemp[$i]['hp'];
+            $peserta->id_kegiatan = "[]";
+            $peserta->ket = "ket";
+            $peserta->save();
+        }
+        return $nikOnly;
+    } catch (\Throwable $th) {
+        //throw $th
+        throw $th;
+    }
     }
 
     /**
@@ -44,20 +104,10 @@ class KegiatanController extends Controller
      * @param  \App\kegiatan  $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function show(kegiatan $kegiatan)
+    public function detail($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(kegiatan $kegiatan)
-    {
-        //
+        $kegiatan = kegiatan::find($id);
+        return view('detail')->with('kegiatan', $kegiatan);
     }
 
     /**

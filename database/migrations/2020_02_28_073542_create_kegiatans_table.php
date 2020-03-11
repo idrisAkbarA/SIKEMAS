@@ -15,8 +15,11 @@ class CreateKegiatansTable extends Migration
     {
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->bigIncrements('id_kegiatan')->unique();
+            $table->string('nama_kel');
+            $table->foreign('nama_kel')->references('nama_kel')->on('kelurahans');
             $table->string('nama_kegiatan');
-            $table->dateTime('waktu_kegiatan');
+            $table->dateTime('tanggal_dari');
+            $table->dateTime('tanggal_sampai');
             $table->string('tempat_kegiatan');
             $table->string('tujuan');
             $table->string('penyelenggara');
@@ -24,13 +27,13 @@ class CreateKegiatansTable extends Migration
             $table->string('latar_belakang');
             $table->string('trainer');
             $table->string('cp_trainer');
-            $table->string('uang_saku)');
-            $table->string('anggaran)');
-            $table->string('outcome)');
-            $table->string('foto1)');
-            $table->string('foto2)');
-            $table->string('foto3)');
-            $table->string('foto4)');
+            $table->string('uang_saku');
+            $table->string('anggaran');
+            $table->string('outcome');
+            $table->string('foto1');
+            $table->string('foto2');
+            $table->string('foto3');
+            $table->string('foto4');
             $table->json('peserta');
             $table->timestamps();
         });

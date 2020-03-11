@@ -14,16 +14,14 @@ class CreatePesertasTable extends Migration
     public function up()
     {
         Schema::create('pesertas', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();
-            $table->string('nik');
+            $table->string('nik')->unique();
             $table->string('nama');
-            $table->enum('jk', ['lk', 'pr']);
+            $table->enum('jk', ['Laki-laki', 'Perempuan']);
             $table->string('alamat');
             $table->string('hp');
             $table->string('pekerjaan');
             $table->string('ket');
-            $table->bigInteger('id_kegiatan')->unsigned();
-            $table->foreign('id_kegiatan')->references('id_kegiatan')->on('kegiatans');
+            $table->json('id_kegiatan');
             $table->timestamps();
         });
     }

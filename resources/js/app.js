@@ -25,7 +25,7 @@ Vue.use(Vuetify)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('beranda', require('./components/Beranda.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
-Vue.component('kegiatan', require('./components/Kegiatan.vue').default);
+// Vue.component('kegiatan', require('./components/Kegiatan.vue').default);
 Vue.component('formkegiatan', require('./components/FormKegiatan.vue').default);
 Vue.component('ubahsandi', require('./components/UbahSandi.vue').default);
 Vue.component('detail', require('./components/Detail.vue').default);
@@ -46,5 +46,33 @@ const app = new Vue({
         drawer: null,
         show1: false, //*password login
         loading: false, //* loading halaman
-    })
+    }),
+    methods: {
+        firstFunction(_callback){
+            // do some asynchronous work
+            // and when the asynchronous stuff is complete
+            this.loading=true;
+            _callback();
+        },
+        dashboard(){
+            this.firstFunction(function() {
+                window.location.href = '/dashboard';
+            });
+        },
+        formkegiatan(){
+            this.firstFunction(function() {
+                window.location.href = '/formkegiatan';
+            });
+        },
+        akunpengguna(){
+            this.firstFunction(function() {
+                window.location.href = '/akunpengguna';
+            });
+        },
+        ubahsandi(){
+            this.firstFunction(function() {
+                window.location.href = '/ubahsandi';
+            });
+        },
+    },
 });

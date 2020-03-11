@@ -18,8 +18,6 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id_user')->unique();
             $table->string('username');
             $table->string('password');
-            $table->bigInteger('kel_id')->unsigned();
-            $table->foreign('kel_id')->references('kel_id')->on('kelurahans');
             $table->timestamps();
         });
     }

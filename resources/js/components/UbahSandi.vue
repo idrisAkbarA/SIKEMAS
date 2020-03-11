@@ -18,7 +18,7 @@
                         <v-text-field label="Kata Sandi Baru" outlined dense required></v-text-field>
                         <v-text-field label="Konfirmasi Kata Sandi" outlined dense required></v-text-field>
                 </v-card-text>
-                <v-card-actions class="ml-2" style="margin-top:-8">
+                <v-card-actions class="ml-2 mt-n8 mb-3">
                     <v-btn type="submit" class="bilu white--text"> Simpan Perubahan</v-btn>
                 </v-card-actions>
             </v-card>
