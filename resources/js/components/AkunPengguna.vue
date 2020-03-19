@@ -48,7 +48,7 @@
                                 batal
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn color="red" dark>
+                            <v-btn color="red" dark @click="dialogDelete = false,deleteConfirmed()">
                                 <v-icon>delete</v-icon> Hapus
                             </v-btn>
                         </v-card-actions>
@@ -76,7 +76,7 @@
                                 batal
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn color="red" dark>
+                            <v-btn color="red" dark @click="dialogReset = false,resetConfirmed()">
                                 <v-icon class="mr-2">mdi-lock-reset</v-icon> Reset
                             </v-btn>
                         </v-card-actions>
@@ -87,7 +87,7 @@
             <!-- bottom sheet edit & tambah-->
             <template>
                 <div class="text-center">
-                    <v-bottom-sheet v-model="sheet" inset>
+                    <v-bottom-sheet persistent v-model="sheet" inset>
                         <v-sheet class="text-center">
 
                             <v-card>
@@ -119,7 +119,7 @@
                                     <v-spacer></v-spacer>
                                     <v-btn height="50" width="120" color="green darken-1" class="white--text"
                                         @click="simpan">
-                                        Simpan</v-btn>
+                                        {{formBtn}}</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-sheet>
@@ -127,16 +127,15 @@
                 </div>
             </template>
             <!-- snackbar -->
-            <template>
                 <div class="text-center ma-2">
-                    <v-snackbar :color="snackbarColor" v-model="snackbar">
+                    <v-snackbar :color="snackbarColor" :timeout="timeout" v-model="snackbar">
                         {{ snackbarMessage }}
                         <v-btn icon color="white" text @click="snackbar = false">
                             <v-icon>close</v-icon>
                         </v-btn>
                     </v-snackbar>
                 </div>
-            </template>
+            <!-- akhir snackbar -->
         </v-container>
     </div>
 </template>
@@ -162,6 +161,8 @@
             data: "",
         },
         data: () => ({
+            timeout: 2000,
+            index: -1,
             loading: false,
             snackbar: false,
             snackbarMessage: "hello",
@@ -173,6 +174,7 @@
             dialogDeleteText: null,
             dialogDeleteId: null,
             dialogReset: false,
+            dialogResetId: null,
             headers: [{
                     text: 'Nama Kelurahan',
                     sortable: false,
@@ -187,12 +189,10 @@
             pengguna: [],
             editedIndex: -1,
             editedItem: {
-                username: "",
-                sks: 0,
+                username: ""
             },
             defaultItem: {
-                username: "",
-                sks: 0,
+                username: ""
             },
         }),
 
@@ -202,6 +202,9 @@
             },
             formIcon() {
                 return this.editedIndex === -1 ? 'add' : 'edit'
+            },
+            formBtn() {
+                return this.editedIndex === -1 ? 'Tambah' : 'Edit'
             }
         },
 
@@ -215,19 +218,54 @@
 
         methods: {
             initialize() {
+                // console.log(this.$props.data);
                 this.pengguna = JSON.parse(this.$props.data);
-                console.log(this.pengguna);
+                // console.log(this.pengguna);
             },
             simpan() {
+                var ini = this;
                 if (this.editedIndex > -1) {
-                    Object.assign(this.pengguna[this.editedIndex], this.editedItem)
+                    axios.post('/pengguna',{
+                        old_un: ini.pengguna[ini.index].username, 
+                        username: ini.editedItem.username
+                    })
+                    .then(function (response) {
+                        console.log(response)
+                        if (response.data == true) {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "success";
+                            ini.snackbarMessage = "Pengguna berhasil diedit"
+                            Object.assign(ini.pengguna[ini.editedIndex], ini.editedItem.username)
+                        } else {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "error";
+                            ini.snackbarMessage = "Nama kelurahan sudah tersedia"
+                        }
+                        
+                    })
                 } else {
                     this.pengguna.push(this.editedItem)
+                    axios.post('/pengguna/tambah',{
+                        username : ini.editedItem.username
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.data == true) {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "success";
+                            ini.snackbarMessage = "Pengguna berhasil ditambahkan"
+                        } else {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "error";
+                            ini.snackbarMessage = "Terjadi kesalahan, coba lagi"
+                        }
+                    })
                 }
                 this.close()
             },
 
             editItem(item) {
+                this.index = this.pengguna.indexOf(item);
                 this.editedIndex = this.pengguna.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.sheet = true
@@ -235,15 +273,52 @@
 
             deleteItem(item) {
                 const index = this.pengguna.indexOf(item)
+                this.dialogDeleteId = item.username;
                 // confirm('Are you sure you want to delete this item?') && this.pengguna.splice(index, 1)
                 this.dialogDelete = true
             },
 
+            deleteConfirmed() {
+                var ini = this;
+                axios.delete('/pengguna/' + this.dialogDeleteId)
+                .then(function (response) {
+                    console.log(response);
+                    if (response.data == true) {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "success";
+                            ini.snackbarMessage = "Pengguna berhasil dihapus"
+                        } else {
+                            ini.snackbar = true;
+                            ini.snackbarColor = "error";
+                            ini.snackbarMessage = "Terjadi kesalahan, coba lagi"
+                        }
+                })
+            },
+
             resetItem(item) {
                 this.dialogReset = true
-
+                this.dialogResetId = item.username;
             },
+
+            resetConfirmed(){
+                var ini = this;
+                axios.post('/pengguna/' + this.dialogResetId)
+                .then(function (response) {
+                    if (response.data == true) {
+                        ini.snackbar = true;
+                        ini.snackbarColor = "success";
+                        ini.snackbarMessage = "Password berhasil di reset"
+                    } else {
+                        ini.snackbar = true;
+                        ini.snackbarColor = "error";
+                        ini.snackbarMessage = "Terjadi kesalahan, coba lagi"
+                    }
+                }) 
+            },
+
             close() {
+                this.dialogReset = false
+                this.dialogDelete = false
                 this.sheet = false
                 this.loading = false;
                 setTimeout(() => {

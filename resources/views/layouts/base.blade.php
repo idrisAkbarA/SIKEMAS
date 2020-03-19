@@ -32,6 +32,14 @@
               </v-list-item>
               <v-divider style="margin-top:4px"></v-divider> 
               <v-list dense>
+                  <v-list-item @click="dashboardAdmin()" class="@yield('dashboardadmin')">
+                    <v-list-item-action>
+                        <v-icon>mdi-view-dashboard</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-medium body-2">Dashboard Admin</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
                   <v-list-item @click="dashboard()" class="@yield('dashboard')">
                     <v-list-item-action>
                         <v-icon>mdi-view-dashboard</v-icon>
@@ -48,7 +56,7 @@
                         <v-list-item-title class="font-weight-medium body-2">Kegiatan</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item @click="akunpengguna()" class="@yield('akunpengguna')">
+                <v-list-item @click="pengguna()" class="@yield('pengguna')">
                     <v-list-item-action>
                         <v-icon>mdi-account</v-icon>
                     </v-list-item-action>

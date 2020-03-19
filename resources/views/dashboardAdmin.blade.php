@@ -1,15 +1,15 @@
 @extends('layouts.base')
 
 @section('halaman')
-    Akun Pengguna
+    Dashboard Admin
 @endsection
 
-@section('pengguna')
+@section('dashboardadmin')
     bilu
 @endsection
 
 @section('content')
-<akunpengguna data="{{$akun}}"></akunpengguna>
+<dashboardadmin></dashboardadmin>
 @endsection
 
 <style>

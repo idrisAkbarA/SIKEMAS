@@ -16,7 +16,6 @@ class CreateKegiatansTable extends Migration
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->bigIncrements('id_kegiatan')->unique();
             $table->string('nama_kel');
-            $table->foreign('nama_kel')->references('nama_kel')->on('kelurahans');
             $table->string('nama_kegiatan');
             $table->dateTime('tanggal_dari');
             $table->dateTime('tanggal_sampai');

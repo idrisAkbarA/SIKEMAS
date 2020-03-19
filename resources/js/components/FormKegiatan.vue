@@ -13,8 +13,7 @@
                         <v-stepper-content step="1">
                             <v-form>
                                 <v-container>
-                                    <v-text-field v-model="nama_kegiatan" label="Nama Kegiatan"
-                                        outlined dense required>
+                                    <v-text-field v-model="nama_kegiatan" label="Nama Kegiatan" outlined dense required>
                                     </v-text-field>
                                     <v-row style="margin-top:-15px">
                                         <v-col cols="12" lg="6" md="6" sm="12">
@@ -26,8 +25,8 @@
                                                     <v-text-field v-model="dari" label="Dari" prepend-icon="event"
                                                         readonly v-on="on"></v-text-field>
                                                 </template>
-                                                <v-date-picker v-model="dari" @input="tanggal_dari = false" no-title scrollable
-                                                  >
+                                                <v-date-picker v-model="dari" @input="tanggal_dari = false" no-title
+                                                    scrollable>
                                                 </v-date-picker>
                                             </v-menu>
                                         </v-col>
@@ -40,8 +39,8 @@
                                                     <v-text-field v-model="sampai" label="Sampai" prepend-icon="event"
                                                         readonly v-on="on"></v-text-field>
                                                 </template>
-                                                <v-date-picker v-model="sampai" @input="tanggal_sampai = false" no-title scrollable
-                                                   >
+                                                <v-date-picker v-model="sampai" @input="tanggal_sampai = false" no-title
+                                                    scrollable>
                                                 </v-date-picker>
                                             </v-menu>
                                         </v-col>
@@ -76,7 +75,7 @@
                                         outlined dense prepend-icon="mdi-camera"></v-file-input>
                                 </v-container>
                             </v-form>
-                                <v-btn color="light-blue darken-1" dark @click="e1 = 2">
+                            <v-btn color="light-blue darken-1" dark @click="e1 = 2">
                                 Selanjutnya
                             </v-btn>
                         </v-stepper-content>
@@ -97,14 +96,14 @@
                                 </template>
                                 <template v-slot:item.action="{ item }">
                                     <v-btn icon @click="edit(item)">
-                                    <v-icon>
-                                        edit
-                                    </v-icon>
+                                        <v-icon>
+                                            edit
+                                        </v-icon>
                                     </v-btn>
                                     <v-btn icon @click="deleteItem(item)">
-                                    <v-icon>
-                                        delete
-                                    </v-icon>
+                                        <v-icon>
+                                            delete
+                                        </v-icon>
 
                                     </v-btn>
                                 </template>
@@ -113,85 +112,111 @@
                                 </template>
                             </v-data-table>
                             <!-- bottom sheet -->
-                            <template>
-                                <div class="text-center">
-                                    <v-bottom-sheet v-model="sheet" inset>
-                                        <v-sheet class="text-center">
+                            <div class="text-center">
+                                <v-bottom-sheet persistent v-model="sheet" inset>
+                                    <v-sheet class="text-center">
 
-                                            <v-card>
-                                                <v-progress-linear :indeterminate="loading" color="light-blue darken-1"
-                                                    class="my-0" height="6">
-                                                </v-progress-linear>
-                                                <v-card-title>
-                                                    <v-icon class="mr-2">{{formIcon}}</v-icon>
-                                                    <span class="headline">{{ formTitle }}</span>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn @click="close" text icon color="red">
-                                                        <v-icon>close</v-icon>
-                                                    </v-btn>
-                                                </v-card-title>
+                                        <v-card>
+                                            <v-progress-linear :indeterminate="loading" color="light-blue darken-1"
+                                                class="my-0" height="6">
+                                            </v-progress-linear>
+                                            <v-card-title>
+                                                <v-icon class="mr-2">{{formIcon}}</v-icon>
+                                                <span class="headline">{{ formTitle }}</span>
+                                                <v-spacer></v-spacer>
+                                                <v-btn @click="close" text icon color="red">
+                                                    <v-icon>close</v-icon>
+                                                </v-btn>
+                                            </v-card-title>
 
-                                                <v-card-text>
-                                                    <v-container class="mt-n5">
-                                                        <v-row>
-                                                            <v-col cols="6">
-                                                                <v-text-field v-model="editedItem.nik" label="NIK"
-                                                                    outlined dense required>
-                                                                </v-text-field>
-                                                            </v-col>
-                                                            <v-col cols="6">
-                                                                <v-text-field v-model="editedItem.nama" label="Nama"
-                                                                    outlined dense required>
-                                                                </v-text-field>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row class="mt-n5">
-                                                            <v-col cols="12">
-                                                                <v-radio-group v-model="editedItem.jk" row
-                                                                    class="mt-n1">
-                                                                    <v-radio label="Laki-laki" value="Laki-laki">
-                                                                    </v-radio>
-                                                                    <v-radio label="Perempuan" value="Perempuan">
-                                                                    </v-radio>
-                                                                </v-radio-group>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row class="mt-n5">
-                                                            <v-col cols="6">
-                                                                <v-text-field v-model="editedItem.hp" label="No. HP"
-                                                                    outlined dense required>
-                                                                </v-text-field>
-                                                            </v-col>
-                                                            <v-col cols="6">
-                                                                <v-text-field v-model="editedItem.pekerjaan"
-                                                                    label="Pekerjaan" outlined dense required>
-                                                                </v-text-field>
-                                                            </v-col>
-                                                        </v-row>
-                                                        <v-row class="mt-n5">
-                                                            <v-col cols="12">
-                                                                <v-text-field v-model="editedItem.alamat" label="Alamat"
-                                                                    outlined dense required>
-                                                                </v-text-field>
-                                                            </v-col>
-                                                        </v-row>
-                                                    </v-container>
-                                                </v-card-text>
+                                            <v-card-text>
+                                                <v-container class="mt-n5">
+                                                    <v-row>
+                                                        <v-col cols="6">
+                                                            <v-text-field v-model="editedItem.nik" label="NIK" outlined
+                                                                dense required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="6">
+                                                            <v-text-field v-model="editedItem.nama" label="Nama"
+                                                                outlined dense required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row class="mt-n5">
+                                                        <v-col cols="12">
+                                                            <v-radio-group v-model="editedItem.jk" row class="mt-n1">
+                                                                <v-radio label="Laki-laki" value="Laki-laki">
+                                                                </v-radio>
+                                                                <v-radio label="Perempuan" value="Perempuan">
+                                                                </v-radio>
+                                                            </v-radio-group>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row class="mt-n5">
+                                                        <v-col cols="6">
+                                                            <v-text-field v-model="editedItem.hp" label="No. HP"
+                                                                outlined dense required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="6">
+                                                            <v-text-field v-model="editedItem.pekerjaan"
+                                                                label="Pekerjaan" outlined dense required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-row class="mt-n5">
+                                                        <v-col cols="12">
+                                                            <v-text-field v-model="editedItem.alamat" label="Alamat"
+                                                                outlined dense required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                            </v-card-text>
 
-                                                <v-card-actions class="mt-n10">
-                                                    <v-btn height="50" width="120" color="error" text @click="close">
-                                                        Batal</v-btn>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn class="mr-5" height="50" width="120"
-                                                        color="light-blue darken-1" dark
-                                                        @click="save()">
-                                                        Tambah</v-btn>
-                                                </v-card-actions>
-                                            </v-card>
-                                        </v-sheet>
-                                    </v-bottom-sheet>
-                                </div>
-                            </template>
+                                            <v-card-actions class="mt-n10">
+                                                <v-btn height="50" width="120" color="error" text @click="close">
+                                                    Batal</v-btn>
+                                                <v-spacer></v-spacer>
+                                                <v-btn class="mr-5" height="50" width="120" color="light-blue darken-1"
+                                                    dark @click="save()">
+                                                    {{formBtn}}</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-sheet>
+                                </v-bottom-sheet>
+                            </div>
+                            <!-- akhir -->
+                            <!-- Dialog Delete -->
+                            <div class="text-center">
+                                <v-dialog v-model="dialogDelete" width="400">
+
+                                    <v-card>
+                                        <v-card-title class="headline red white--text" primary-title>
+                                            <v-icon color="white" class="mr-2">delete</v-icon> Hapus Peserta
+                                        </v-card-title>
+
+                                        <v-card-text class="mt-2 black--text">
+                                            Apakah anda yakin akan menghapus Peserta <span
+                                                class="font-weight-bold">{{deleteText}}</span>?
+                                        </v-card-text>
+
+                                        <v-divider></v-divider>
+
+                                        <v-card-actions>
+                                            <v-btn @click="dialogDelete = false" color="primary" text>
+                                                batal
+                                            </v-btn>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="red" dark @click="dialogDelete = false,deleteConfirmed()">
+                                                <v-icon>delete</v-icon> Hapus
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                            </div>
+                            <!-- Akhir -->
                             <v-btn class="light-blue darken-1" dark @click="simpan">
                                 Simpan
                             </v-btn>
@@ -232,9 +257,13 @@
     export default {
         data() {
             return {
+                index2: null,
+                index: -1,
+                dialogDelete: false,
+                deleteText: null,
                 snackbar: false,
                 snackbarMessage: "hello",
-                snackbarColor: "success",
+                snackbarColor: "light-blue",
                 nama_kegiatan: '',
                 e1: 1,
                 dari: new Date().toISOString().substr(0, 10),
@@ -304,7 +333,7 @@
                         sortable: false
                     },
                 ],
-                pesertaFixed:[],
+                pesertaFixed: [],
                 desserts: [],
                 search: '',
                 loading: false,
@@ -335,18 +364,21 @@
             },
             formIcon() {
                 return this.editedIndex === -1 ? 'add' : 'edit'
+            },
+            formBtn() {
+                return this.editedIndex === -1 ? 'Tambah' : 'Edit'
             }
         },
         methods: {
             save() {
-                var ini= this;
-                if(this.editedIndex > -1){
+                var ini = this;
+                if (this.editedIndex > -1) {
                     Object.assign(this.desserts[this.editedIndex], this.editedItem);
                     this.loading = false;
                     this.sheet = false;
-                  
-                }else{
-                    
+
+                } else {
+
                     console.log(this.editedItem);
                     var ini = this;
                     this.loading = true;
@@ -355,8 +387,8 @@
                     this.sheet = false;
                 }
                 this.close()
-                
-                   
+
+
             },
             close() {
                 this.sheet = false;
@@ -367,49 +399,66 @@
                 }, 300)
 
             },
-            
-            edit(item){
+
+            edit(item) {
                 this.editedIndex = this.desserts.indexOf(item);
                 this.editedItem = Object.assign({}, item);
                 this.sheet = true;
             },
 
-            deleteItem (item) {
-            const index = this.desserts.indexOf(item);
-            confirm('Apakah kamu yakin ingin menghapus item ini?') && this.desserts.splice(index, 1);
+            deleteItem(item) {
+                this.index2 = this.desserts.indexOf(item);
+                this.dialogDelete = true
             },
-
-            simpan(){
+            deleteConfirmed() {
+                
+                // confirm('Apakah kamu yakin ingin menghapus item ini?') && this.desserts.splice(index, 1)
+                this.desserts.splice(this.index2, 1)
+            },
+            simpan() {
                 var ini = this;
                 var peserta = JSON.stringify(ini.desserts);
-                console.log(this.desserts);
-                console.log(peserta);
-                 axios.post('/formkegiatan', {
-                            nama_kegiatan: ini.nama_kegiatan,
-                            tanggal_dari: ini.dari,
-                            tanggal_sampai: ini.sampai,
-                            tempat_kegiatan: ini.tempat_kegiatan,
-                            tujuan: ini.tujuan,
-                            penyelenggara: ini.penyelenggara,
-                            penanggung_jawab: ini.penanggung_jawab,
-                            latar_belakang: ini.latar_belakang,
-                            trainer: ini.trainer,
-                            cp_trainer: ini.cp_trainer,
-                            uang_saku: ini.uang_saku,
-                            anggaran: ini.anggaran,
-                            outcome: ini.outcome,
-                            foto1: "uyutytyu",
-                            foto2: "uyutytyu",
-                            foto3: "uyutytyu",
-                            foto4: "uyutytyu",
-                            peserta: ini.desserts,
-                            nik: ini.editedItem.nik,
-                            nama: ini.editedItem.nama,
-                            jk: ini.editedItem.jk,
-                            alamat: ini.editedItem.alamat,
-                            hp: ini.editedItem.hp,
-                            pekerjaan: ini.editedItem.pekerjaan,
-                         })
+                // console.log(this.desserts);
+                // console.log(peserta);
+                axios.post('/formkegiatan', {
+                    nama_kegiatan: ini.nama_kegiatan,
+                    tanggal_dari: ini.dari,
+                    tanggal_sampai: ini.sampai,
+                    tempat_kegiatan: ini.tempat_kegiatan,
+                    tujuan: ini.tujuan,
+                    penyelenggara: ini.penyelenggara,
+                    penanggung_jawab: ini.penanggung_jawab,
+                    latar_belakang: ini.latar_belakang,
+                    trainer: ini.trainer,
+                    cp_trainer: ini.cp_trainer,
+                    uang_saku: ini.uang_saku,
+                    anggaran: ini.anggaran,
+                    outcome: ini.outcome,
+                    foto1: "uyutytyu",
+                    foto2: "uyutytyu",
+                    foto3: "uyutytyu",
+                    foto4: "uyutytyu",
+                    peserta: ini.desserts,
+                    nik: ini.editedItem.nik,
+                    nama: ini.editedItem.nama,
+                    jk: ini.editedItem.jk,
+                    alamat: ini.editedItem.alamat,
+                    hp: ini.editedItem.hp,
+                    pekerjaan: ini.editedItem.pekerjaan,
+                })
+                .then(function (response) {
+                    // console.log(response);
+                    if (response.data == true) {
+                        setTimeout(function(){location.href="/formkegiatan"} , 300);
+                        // window.location.href = '/formkegiatan'
+                        ini.snackbar = true;
+                        ini.snackbarMessage = "Kegiatan Berhasil Ditambahkan";
+                    } else {
+                        ini.snackbar = true;
+                        ini.snackbarMessage = "Terjadi kesalahan, coba lagi";
+                        ini.snackbarColor = "error";
+                    }
+                })
             }
         }
     }

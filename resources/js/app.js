@@ -23,8 +23,8 @@ Vue.use(Vuetify)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('beranda', require('./components/Beranda.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('dashboardadmin', require('./components/DashboardAdmin.vue').default);
 // Vue.component('kegiatan', require('./components/Kegiatan.vue').default);
 Vue.component('formkegiatan', require('./components/FormKegiatan.vue').default);
 Vue.component('ubahsandi', require('./components/UbahSandi.vue').default);
@@ -54,6 +54,11 @@ const app = new Vue({
             this.loading=true;
             _callback();
         },
+        dashboardAdmin(){
+            this.firstFunction(function() {
+                window.location.href = '/dashboardadmin';
+            });
+        },
         dashboard(){
             this.firstFunction(function() {
                 window.location.href = '/dashboard';
@@ -64,9 +69,9 @@ const app = new Vue({
                 window.location.href = '/formkegiatan';
             });
         },
-        akunpengguna(){
+        pengguna(){
             this.firstFunction(function() {
-                window.location.href = '/akunpengguna';
+                window.location.href = '/pengguna';
             });
         },
         ubahsandi(){

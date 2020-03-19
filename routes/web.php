@@ -18,29 +18,39 @@ Route::get('/masuk', function () {
     return view('beranda');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
-// Route::get('/kegiatan', function () {
-//     return view('kegiatan');
-// });
-    
+//* DASHBOARD ADMIN
+Route::get('/admin', function () {
+    return view('dashboardAdmin');
+});
+
+//* FORM KEGIATAN
 Route::get('/formkegiatan', function () {
     return view('formKegiatan');
 });
 
+//* DASHBOARD PENGGUNA
 Route::get('/dashboard', 'KegiatanController@index');
 Route::post('/formkegiatan', 'KegiatanController@store');
 Route::get('/detail/{id}', 'KegiatanController@detail');
 
-Route::get('/ubahsandi', function () {
-    return view('ubahSandi');
-});
-Route::get('/akunpengguna', 'KelurahanController@index');
-
+//* PESERTA
 Route::get('/peserta', function () {
     return view('peserta');
 });
+
+//* AKUN PENGGUNA
+Route::get('/pengguna', 'KelurahanController@index');
+Route::post('/pengguna', 'KelurahanController@edit');
+Route::post('/pengguna/tambah', 'KelurahanController@tambah');
+Route::delete('/pengguna/{id}', 'KelurahanController@hapus');
+Route::post('/pengguna/{id}', 'KelurahanController@reset');
+
+//* UBAH KATA SANDI
+Route::get('/ubahsandi', function () {
+    return view('ubahSandi');
+});
+Route::post('/cekSandi', 'KelurahanController@cekSandi');
+Route::post('/ubahSandi', 'KelurahanController@ubahSandi');
 
 Auth::routes();
 

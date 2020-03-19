@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\kegiatan;
 use App\peserta;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -46,6 +47,16 @@ class KegiatanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function getIdKegiatanPeserta($nik,$idKegiatanBaru){
+        $data = Peserta::find($nik);
+        $idKegiatanDB = json_decode($data->id_kegiatan, true);
+        if($idKegiatanDB == null){
+            return "[$idKegiatanBaru]";
+        }else{
+            array_push($idKegiatanDB, $idKegiatanBaru);
+            return$idKegiatanDB;
+        }
+    }
     public function store(Request $request)
     {   
         
@@ -74,27 +85,33 @@ class KegiatanController extends Controller
         $kegiatan->foto4 = $input->foto4;
         $kegiatan->peserta = json_encode($input->peserta,true);
         $kegiatan->save();
-
         
         $pesertaTemp = $input->peserta;
         $nikOnly=[];
         for ($i=0; $i < sizeof($pesertaTemp) ; $i++) { 
             // array_push($nikOnly, $pesertaTemp[$i]['nik']);
-            $peserta = new peserta;
-            $peserta->nik = $pesertaTemp[$i]['nik'];
-            $peserta->nama = $pesertaTemp[$i]['nama'];
-            $peserta->jk = $pesertaTemp[$i]['jk'];
-            $peserta->alamat = $pesertaTemp[$i]['alamat'];
-            $peserta->pekerjaan = $pesertaTemp[$i]['pekerjaan'];
-            $peserta->hp = $pesertaTemp[$i]['hp'];
-            $peserta->id_kegiatan = "[]";
-            $peserta->ket = "ket";
+            //get all json from this peserta
+            DB::table('pesertas')
+                ->updateOrInsert(
+                    ['nik' => $pesertaTemp[$i]['nik'],],
+                    ['nama' => $pesertaTemp[$i]['nama'],
+                    'jk' => $pesertaTemp[$i]['jk'],
+                    'alamat' => $pesertaTemp[$i]['alamat'],
+                    'pekerjaan' => $pesertaTemp[$i]['pekerjaan'],
+                    'hp' => $pesertaTemp[$i]['hp'],
+                    'ket' => "ket",]
+                );
+        }
+        for ($i=0; $i <sizeof($pesertaTemp) ; $i++) { 
+            $peserta = peserta::where('nik', $pesertaTemp[$i]['nik'])->first();
+            $peserta->id_kegiatan = $this->getIdKegiatanPeserta($pesertaTemp[$i]['nik'], $kegiatan->id_kegiatan);
             $peserta->save();
         }
-        return $nikOnly;
+        return response('true');
+        // return $nikOnly;
     } catch (\Throwable $th) {
-        //throw $th
-        throw $th;
+        // throw $th;
+        return response('false');
     }
     }
 
