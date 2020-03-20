@@ -22,8 +22,8 @@
                             <v-list-item>
                                 <v-list-item-content>
                                     <div class="grey--text">Waktu Kegiatan</div>
-                                    <v-list-item-title class="body-1">{{kegiatan.tanggal_dari}} -
-                                        {{kegiatan.tanggal_sampai}}</v-list-item-title>
+                                    <v-list-item-title class="body-1">{{new Date(kegiatan.tanggal_dari).toLocaleDateString()}} -
+                                        {{new Date(kegiatan.tanggal_sampai).toLocaleDateString()}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item>

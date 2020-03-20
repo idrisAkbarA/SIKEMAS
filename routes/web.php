@@ -19,9 +19,10 @@ Route::get('/masuk', function () {
 });
 
 //* DASHBOARD ADMIN
-Route::get('/admin', function () {
-    return view('dashboardAdmin');
-});
+// Route::get('/admin', function () {
+//     return view('dashboardAdmin');
+// });
+Route::get('/admin', 'KegiatanController@admin');
 
 //* FORM KEGIATAN
 Route::get('/formkegiatan', function () {

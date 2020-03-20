@@ -3,17 +3,18 @@
         <v-container class="mt-7">
             <v-row>
                 <v-col>
-                    <v-card elevation="5">
-                        <v-card class="v-sheet--offset mx-auto" color="gradient" elevation="9"
+                    <v-card max-heigth="500" elevation="5">
+                        <v-card  class="v-sheet--offset mx-auto" color="gradient" elevation="9"
                             max-width="calc(100% - 32px)" height="88px">
                             <v-list-item three-line>
                                 <v-list-item-content class="white--text">
                                     <div class="">TOTAL KEGIATAN</div>
-                                    <v-list-item-title class="headline mb-1">Kel. Air Hitam</v-list-item-title>
+                                    <v-list-item-title class="headline mb-1">Kel. {{Object.keys(kegiatan)[0]}}</v-list-item-title>
                                 </v-list-item-content>
-                                <h2 class="white--text">4</h2>
+                                <h2 class="white--text">{{realKegiatanYaya.length}}</h2>
                             </v-list-item>
                         </v-card>
+                        <v-sheet class="overflow-y-auto" height="300">
                         <v-container>
                             <v-simple-table>
                                 <template v-slot:default>
@@ -25,7 +26,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, i) in kegiatan" :key="i">
+                                        <tr v-for="(item, i) in realKegiatanYaya" :key="i">
                                             <td>{{i+1}}</td>
                                             <td>{{item.nama_kegiatan}}</td>
                                             <td class="text-center">
@@ -36,7 +37,7 @@
                                 </template>
                             </v-simple-table>
                         </v-container>
-
+                        </v-sheet>
                     </v-card>
                 </v-col>
             </v-row>
@@ -67,6 +68,7 @@
         data() {
             return {
                 kegiatan: [],
+                realKegiatanYaya:[],
 
             }
         },
@@ -81,7 +83,10 @@
         methods: {
             initialize() {
                 this.kegiatan = JSON.parse(this.$props.data);
-                console.log(this.kegiatan);
+                // console.log(this.kegiatan);
+                // console.log( Object.keys(this.kegiatan));
+                console.log(this.kegiatan[Object.keys(this.kegiatan)[0]]);
+                this.realKegiatanYaya = this.kegiatan[Object.keys(this.kegiatan)[0]];
             },
             detail(id_kegiatan){
                 var id = id_kegiatan;

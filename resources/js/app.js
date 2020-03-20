@@ -31,6 +31,7 @@ Vue.component('ubahsandi', require('./components/UbahSandi.vue').default);
 Vue.component('detail', require('./components/Detail.vue').default);
 Vue.component('akunpengguna', require('./components/AkunPengguna.vue').default);
 Vue.component('peserta', require('./components/Peserta.vue').default);
+Vue.component('cardKel', require('./components/cardKel.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -56,7 +57,7 @@ const app = new Vue({
         },
         dashboardAdmin(){
             this.firstFunction(function() {
-                window.location.href = '/dashboardadmin';
+                window.location.href = '/admin';
             });
         },
         dashboard(){

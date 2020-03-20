@@ -55,7 +55,7 @@
                                         dense required></v-text-field>
                                     <v-textarea v-model="latar_belakang" label="Latar Belakang Kegiatan" outlined dense
                                         required></v-textarea>
-                                    <v-text-field v-model="trainer" label="Trainer" outlined dense required>
+                                    <v-text-field v-model="trainer" label="Trainer / Narasumber" outlined dense required>
                                     </v-text-field>
                                     <v-text-field v-model="cp_trainer" label="Cp Trainer" outlined dense required>
                                     </v-text-field>

@@ -4,49 +4,28 @@ namespace App\Http\Controllers;
 
 use App\kegiatan;
 use App\peserta;
+use App\User;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return view('dashboard')->with('kegiatan',kegiatan::all());
+        // $user = Auth::User()->username;
+        $user = "Air Hitam";
+        $kegiatan = kegiatan::all();
+        return view('dashboard')->with('kegiatan', $kegiatan);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit(request $request)
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function getIdKegiatanPeserta($nik,$idKegiatanBaru){
         $data = Peserta::find($nik);
         $idKegiatanDB = json_decode($data->id_kegiatan, true);
@@ -62,6 +41,7 @@ class KegiatanController extends Controller
         
         try {
             //code...
+        // $user = Auth::User()->username;
         $id_kel = "Air Hitam"; //*ganti isi variable kelak dengan session
         $input = $request;
         $kegiatan = new kegiatan;
@@ -115,38 +95,41 @@ class KegiatanController extends Controller
     }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
     public function detail($id)
     {
         $kegiatan = kegiatan::find($id);
         return view('detail')->with('kegiatan', $kegiatan);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, kegiatan $kegiatan)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(kegiatan $kegiatan)
     {
         //
+    }
+
+    public function admin()
+    {   
+        $current_year  = Carbon::now()->year;
+        $all_kegiatan  = kegiatan::whereYear('created_at',$current_year)->get();
+        $all_kelurahan =  User::pluck('username');
+        $grouped_kelurahan_data=[];
+        for ($i=0; $i <sizeof($all_kelurahan) ; $i++) { 
+            $kelurahan_data = kegiatan::where('nama_kel',$all_kelurahan[$i])->get();
+            array_push($grouped_kelurahan_data, ["$all_kelurahan[$i]"=>$kelurahan_data]);
+        }
+        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[1])->get());
+        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[0])->get());
+        
+        $array= [1];
+        array_push($array,3);
+        // return $grouped_kelurahan_data;
+        // return $grouped_kelurahan_data;  
+        // return [kegiatan::where('nama_kel',$all_kelurahan[1])->get()];
+        // return [$grouped_kelurahan_data,$all_kelurahan];
+        return view('dashboardAdmin')->with('kegiatan',json_encode($grouped_kelurahan_data));
     }
 }
