@@ -17,8 +17,8 @@ class KegiatanController extends Controller
     {
         // $user = Auth::User()->username;
         $user = "Air Hitam";
-        $kegiatan = kegiatan::all();
-        return view('dashboard')->with('kegiatan', $kegiatan);
+        $kegiatan = kegiatan::where('nama_kel', $user)->get();
+        return view('dashboard')->with('kegiatan', $kegiatan)->with('user', $user);
     }
  
     public function edit(request $request)

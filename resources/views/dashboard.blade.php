@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-<dashboard data="{{$kegiatan}}"></dashboard>
+<dashboard data="{{$kegiatan}}" user="{{$user}}"></dashboard>
 @endsection
 
 <style>

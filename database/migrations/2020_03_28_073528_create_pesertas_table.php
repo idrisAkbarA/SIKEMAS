@@ -20,7 +20,6 @@ class CreatePesertasTable extends Migration
             $table->string('alamat');
             $table->string('hp');
             $table->string('pekerjaan');
-            $table->string('ket');
             $table->json('id_kegiatan')->nullable();
             $table->timestamps();
         });

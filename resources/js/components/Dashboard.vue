@@ -9,9 +9,9 @@
                             <v-list-item three-line>
                                 <v-list-item-content class="white--text">
                                     <div class="">TOTAL KEGIATAN</div>
-                                    <v-list-item-title class="headline mb-1">Kel. Air Hitam</v-list-item-title>
+                                    <v-list-item-title class="headline mb-1">Kel. {{user}}</v-list-item-title>
                                 </v-list-item-content>
-                                <h2 class="white--text">4</h2>
+                                <h2 class="white--text">{{kegiatan.length}}</h2>
                             </v-list-item>
                         </v-card>
                         <v-container>
@@ -63,25 +63,21 @@
     export default {
         props: {
             data: "",
+            user: "",
         },
         data() {
             return {
                 kegiatan: [],
-
             }
         },
         created() {
             this.initialize()
         },
 
-        mounted() {
-            this.kegiatan = JSON.parse(this.$props.data);
-        },
-
         methods: {
             initialize() {
                 this.kegiatan = JSON.parse(this.$props.data);
-                console.log(this.kegiatan);
+                // console.log(this.user);
             },
             detail(id_kegiatan){
                 var id = id_kegiatan;

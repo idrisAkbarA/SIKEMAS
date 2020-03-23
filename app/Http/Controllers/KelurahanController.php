@@ -129,15 +129,16 @@ class KelurahanController extends Controller
     public function hapus($username)
     {
         try {
+            $pengguna = kelurahan::find($username);
+            $pengguna->delete();
+
             $pengguna = User::find($username);
             $pengguna->delete();
 
-            $pengguna = kelurahan::find($username);
-            $pengguna->delete();
             return response('true');
         } catch (\Throwable $th) {
-            // throw $th;
-            return response('false');
+            throw $th;
+            // return response('false');
         }
         // return $username;
     }

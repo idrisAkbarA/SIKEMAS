@@ -2303,7 +2303,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    data: ""
+    data: "",
+    user: ""
   },
   data: function data() {
     return {
@@ -2313,13 +2314,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.initialize();
   },
-  mounted: function mounted() {
-    this.kegiatan = JSON.parse(this.$props.data);
-  },
   methods: {
     initialize: function initialize() {
-      this.kegiatan = JSON.parse(this.$props.data);
-      console.log(this.kegiatan);
+      this.kegiatan = JSON.parse(this.$props.data); // console.log(this.user);
     },
     detail: function detail(id_kegiatan) {
       var id = id_kegiatan;
@@ -40385,14 +40382,14 @@ var render = function() {
                                   _c(
                                     "v-list-item-title",
                                     { staticClass: "headline mb-1" },
-                                    [_vm._v("Kel. Air Hitam")]
+                                    [_vm._v("Kel. " + _vm._s(_vm.user))]
                                   )
                                 ],
                                 1
                               ),
                               _vm._v(" "),
                               _c("h2", { staticClass: "white--text" }, [
-                                _vm._v("4")
+                                _vm._v(_vm._s(_vm.kegiatan.length))
                               ])
                             ],
                             1
