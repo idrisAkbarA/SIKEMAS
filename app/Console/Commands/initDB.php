@@ -83,7 +83,7 @@ class initDB extends Command
         $decodedPeserta = json_decode($peserta,true);
         $kumpulanPeserta = [];
         
-        for ($i=0; $i < 20; $i++) { 
+        for ($i=0; $i < 10; $i++) { 
             $faker = Faker::create('id_ID');
             $kegiatan = new kegiatan;
             $kegiatan->nama_kel = $listKelurahan[rand(0,6)];
@@ -113,8 +113,5 @@ class initDB extends Command
             $kegiatan->peserta = json_encode($kumpulanPeserta,true);
             $kegiatan->save();
         }
-        // $kumpulanPeserta[] = $peserta[0];
-        // array_push($kumpulanPeserta,$decodedPeserta);
-       
     }
 }
