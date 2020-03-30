@@ -43,10 +43,16 @@ class KegiatanController extends Controller
             //code...
         // $user = Auth::Use r()->username;
         $id_kel = "Air Hitam"; //*ganti isi variable kelak dengan session
+
+
+        //*masukkan key keterangan di setiap peserta
         $input = $request;
         $finalPeserta = [];
-        for ($i=0; $i < sizeof($input->peserta) ; $i++) { 
-            array_push($peserta, ['ket'=>'-']);
+        $pesertaArray = $input->peserta;
+        for ($i=0; $i < sizeof($pesertaArray) ; $i++) { 
+            $temp = array_merge($pesertaArray[$i], ['ket'=>'-']); //gabungkan isi array peserta ke $i dengan key keterangan
+            array_push($finalPeserta, $temp); // masukkan peserta yang sudah ditambah keterangan ke dalam satu array
+
         }
 
 
@@ -96,8 +102,8 @@ class KegiatanController extends Controller
         return response('true');
         // return $nikOnly;
     } catch (\Throwable $th) {
-        // throw $th;
-        return response('false');
+        throw $th;
+        // return response('false');
     }
     }
 

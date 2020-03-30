@@ -110,7 +110,7 @@ class initDB extends Command
             }
 
             // $kegiatan->peserta = "[]";
-            $kegiatan->peserta = ["$kumpulanPeserta"];
+            $kegiatan->peserta = json_encode($kumpulanPeserta,true);
             $kegiatan->save();
         }
         // $kumpulanPeserta[] = $peserta[0];
