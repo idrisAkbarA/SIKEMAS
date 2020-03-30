@@ -110,7 +110,7 @@ class initDB extends Command
             }
 
             // $kegiatan->peserta = "[]";
-            $kegiatan->peserta = "[$kumpulanPeserta]";
+            $kegiatan->peserta = ["$kumpulanPeserta"];
             $kegiatan->save();
         }
         // $kumpulanPeserta[] = $peserta[0];

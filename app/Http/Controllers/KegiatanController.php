@@ -41,9 +41,15 @@ class KegiatanController extends Controller
         
         try {
             //code...
-        // $user = Auth::User()->username;
+        // $user = Auth::Use r()->username;
         $id_kel = "Air Hitam"; //*ganti isi variable kelak dengan session
         $input = $request;
+        $finalPeserta = [];
+        for ($i=0; $i < sizeof($input->peserta) ; $i++) { 
+            array_push($peserta, ['ket'=>'-']);
+        }
+
+
         $kegiatan = new kegiatan;
         $kegiatan->nama_kel = $id_kel;
         $kegiatan->nama_kegiatan = $input->nama_kegiatan;
@@ -63,7 +69,7 @@ class KegiatanController extends Controller
         $kegiatan->foto2 = $input->foto2;
         $kegiatan->foto3 = $input->foto3;
         $kegiatan->foto4 = $input->foto4;
-        $kegiatan->peserta = json_encode($input->peserta,true);
+        $kegiatan->peserta = json_encode($finalPeserta,true);
         $kegiatan->save();
         
         $pesertaTemp = $input->peserta;
@@ -77,9 +83,9 @@ class KegiatanController extends Controller
                     ['nama' => $pesertaTemp[$i]['nama'],
                     'jk' => $pesertaTemp[$i]['jk'],
                     'alamat' => $pesertaTemp[$i]['alamat'],
-                    'pekerjaan' => $pesertaTemp[$i]['pekerjaan'],
                     'hp' => $pesertaTemp[$i]['hp'],
-                    'ket' => "ket",]
+                    'pekerjaan' => $pesertaTemp[$i]['pekerjaan'],
+                    ]
                 );
         }
         for ($i=0; $i <sizeof($pesertaTemp) ; $i++) { 
