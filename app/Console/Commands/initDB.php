@@ -58,7 +58,7 @@ class initDB extends Command
 
             $kelurahan = new User;
             $kelurahan->username = $listKelurahan[$i];
-            $kelurahan->password = Hash::make("12345");
+            $kelurahan->password = Hash::make("12345678");
             $kelurahan->save();
             echo $listKelurahan[$i]."\n";
         }

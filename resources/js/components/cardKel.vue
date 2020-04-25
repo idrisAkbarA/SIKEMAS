@@ -85,7 +85,7 @@
                 this.kegiatan = JSON.parse(this.$props.data);
                 // console.log(this.kegiatan);
                 // console.log( Object.keys(this.kegiatan));
-                console.log(this.kegiatan[Object.keys(this.kegiatan)[0]]);
+                // console.log(this.kegiatan[Object.keys(this.kegiatan)[0]]);
                 this.realKegiatanYaya = this.kegiatan[Object.keys(this.kegiatan)[0]];
             },
             detail(id_kegiatan){

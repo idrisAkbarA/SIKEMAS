@@ -4,17 +4,21 @@
             <v-card width="calc(100% - 15%)" elevation="5">
                 <v-stepper v-model="e1" alt-labels>
                     <v-stepper-header>
-                        <v-stepper-step editable step="1">Isi form kegiatan</v-stepper-step>
+                        <v-stepper-step step="1">Isi form kegiatan</v-stepper-step>
                         <v-divider></v-divider>
-                        <v-stepper-step editable step="2">Input data peserta</v-stepper-step>
+                        <v-stepper-step step="2">Input data peserta</v-stepper-step>
                     </v-stepper-header>
 
                     <v-stepper-items>
                         <v-stepper-content step="1">
                             <v-form>
                                 <v-container>
-                                    <v-text-field v-model="nama_kegiatan" label="Nama Kegiatan" outlined dense required>
+                                    <v-text-field name="nama_kegiatan" v-model="nama_kegiatan" label="Nama Kegiatan" outlined dense v-validate="'required'">
                                     </v-text-field>
+                                    <span 
+                                    v-show="errors.has('nama_kegiatan')">
+                                    {{errors.first('nama_kegiatan')}}
+                                    </span>
                                     <v-row style="margin-top:-15px">
                                         <v-col cols="12" lg="6" md="6" sm="12">
                                             <h6 class="body-1">Waktu Kegiatan</h6>
@@ -55,10 +59,18 @@
                                         dense required></v-text-field>
                                     <v-textarea v-model="latar_belakang" label="Latar Belakang Kegiatan" outlined dense
                                         required></v-textarea>
-                                    <v-text-field v-model="trainer" label="Trainer / Narasumber" outlined dense required>
-                                    </v-text-field>
-                                    <v-text-field v-model="cp_trainer" label="Cp Trainer" outlined dense required>
-                                    </v-text-field>
+                                    <v-row>
+                                        <v-col>
+                                            <v-text-field v-model="trainer" label="Trainer / Narasumber" outlined dense
+                                                required>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field v-model="cp_trainer" label="Cp Trainer" outlined dense
+                                                required>
+                                            </v-text-field>
+                                        </v-col>
+                                    </v-row>
                                     <v-text-field v-model="uang_saku" label="Uang Saku Peserta" outlined dense required>
                                     </v-text-field>
                                     <v-text-field v-model="anggaran" label="Anggaran Dana" outlined dense required>
@@ -411,7 +423,7 @@
                 this.dialogDelete = true
             },
             deleteConfirmed() {
-                
+
                 // confirm('Apakah kamu yakin ingin menghapus item ini?') && this.desserts.splice(index, 1)
                 this.desserts.splice(this.index2, 1)
             },
@@ -421,44 +433,46 @@
                 // console.log(this.desserts);
                 // console.log(peserta);
                 axios.post('/formkegiatan', {
-                    nama_kegiatan: ini.nama_kegiatan,
-                    tanggal_dari: ini.dari,
-                    tanggal_sampai: ini.sampai,
-                    tempat_kegiatan: ini.tempat_kegiatan,
-                    tujuan: ini.tujuan,
-                    penyelenggara: ini.penyelenggara,
-                    penanggung_jawab: ini.penanggung_jawab,
-                    latar_belakang: ini.latar_belakang,
-                    trainer: ini.trainer,
-                    cp_trainer: ini.cp_trainer,
-                    uang_saku: ini.uang_saku,
-                    anggaran: ini.anggaran,
-                    outcome: ini.outcome,
-                    foto1: "uyutytyu",
-                    foto2: "uyutytyu",
-                    foto3: "uyutytyu",
-                    foto4: "uyutytyu",
-                    peserta: ini.desserts,
-                    nik: ini.editedItem.nik,
-                    nama: ini.editedItem.nama,
-                    jk: ini.editedItem.jk,
-                    alamat: ini.editedItem.alamat,
-                    hp: ini.editedItem.hp,
-                    pekerjaan: ini.editedItem.pekerjaan,
-                })
-                .then(function (response) {
-                    // console.log(response);
-                    if (response.data == true) {
-                        setTimeout(function(){location.href="/formkegiatan"} , 300);
-                        // window.location.href = '/formkegiatan'
-                        ini.snackbar = true;
-                        ini.snackbarMessage = "Kegiatan Berhasil Ditambahkan";
-                    } else {
-                        ini.snackbar = true;
-                        ini.snackbarMessage = "Terjadi kesalahan, coba lagi";
-                        ini.snackbarColor = "error";
-                    }
-                })
+                        nama_kegiatan: ini.nama_kegiatan,
+                        tanggal_dari: ini.dari,
+                        tanggal_sampai: ini.sampai,
+                        tempat_kegiatan: ini.tempat_kegiatan,
+                        tujuan: ini.tujuan,
+                        penyelenggara: ini.penyelenggara,
+                        penanggung_jawab: ini.penanggung_jawab,
+                        latar_belakang: ini.latar_belakang,
+                        trainer: ini.trainer,
+                        cp_trainer: ini.cp_trainer,
+                        uang_saku: ini.uang_saku,
+                        anggaran: ini.anggaran,
+                        outcome: ini.outcome,
+                        foto1: "uyutytyu",
+                        foto2: "uyutytyu",
+                        foto3: "uyutytyu",
+                        foto4: "uyutytyu",
+                        peserta: ini.desserts,
+                        nik: ini.editedItem.nik,
+                        nama: ini.editedItem.nama,
+                        jk: ini.editedItem.jk,
+                        alamat: ini.editedItem.alamat,
+                        hp: ini.editedItem.hp,
+                        pekerjaan: ini.editedItem.pekerjaan,
+                    })
+                    .then(function (response) {
+                        // console.log(response);
+                        if (response.data == true) {
+                            setTimeout(function () {
+                                location.href = "/formkegiatan"
+                            }, 300);
+                            // window.location.href = '/formkegiatan'
+                            ini.snackbar = true;
+                            ini.snackbarMessage = "Kegiatan Berhasil Ditambahkan";
+                        } else {
+                            ini.snackbar = true;
+                            ini.snackbarMessage = "Terjadi kesalahan, coba lagi";
+                            ini.snackbarColor = "error";
+                        }
+                    })
             }
         }
     }

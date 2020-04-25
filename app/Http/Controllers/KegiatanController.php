@@ -136,12 +136,37 @@ class KegiatanController extends Controller
         // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[1])->get());
         // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[0])->get());
         
-        $array= [1];
-        array_push($array,3);
+        // $array= [1];
+        // array_push($array,3);
         // return $grouped_kelurahan_data;
         // return $grouped_kelurahan_data;  
         // return [kegiatan::where('nama_kel',$all_kelurahan[1])->get()];
         // return [$grouped_kelurahan_data,$all_kelurahan];
         return view('dashboardAdmin')->with('kegiatan',json_encode($grouped_kelurahan_data));
+    }
+    public function searchAsAdmin(Request $request)
+    {   
+        $search = $request->search;
+        $current_year  = Carbon::now()->year;
+        $all_kegiatan  = kegiatan::whereYear('created_at',$current_year)->get();
+        $all_kelurahan =  User::pluck('username');
+        $grouped_kelurahan_data=[];
+        for ($i=0; $i <sizeof($all_kelurahan) ; $i++) { 
+            $kelurahan_data = kegiatan::where('nama_kel',$all_kelurahan[$i])
+                                        ->where('nama_kegiatan', 'like','%'.$search.'%')
+                                        ->get();
+            array_push($grouped_kelurahan_data, ["$all_kelurahan[$i]"=>$kelurahan_data]);
+        }
+        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[1])->get());
+        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[0])->get());
+        
+        // $array= [1];
+        // array_push($array,3);
+        // return $grouped_kelurahan_data;
+        // return $grouped_kelurahan_data;  
+        // return [kegiatan::where('nama_kel',$all_kelurahan[1])->get()];
+        // return [$grouped_kelurahan_data,$all_kelurahan];
+        
+        return json_encode($grouped_kelurahan_data);
     }
 }

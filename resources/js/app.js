@@ -9,8 +9,12 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vuetify from 'vuetify'
 import Axios from 'axios';
+import VeeValidate, { Validator } from "vee-validate";
+import id from "vee-validate/dist/locale/id";
 
 Vue.use(Vuetify)
+Validator.localize({ id: id });
+Vue.use(VeeValidate, { locale: "id" });
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

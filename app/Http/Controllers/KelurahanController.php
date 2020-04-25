@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\kelurahan;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class KelurahanController extends Controller
@@ -47,7 +48,7 @@ class KelurahanController extends Controller
 
             $pengguna = new User;
             $pengguna->username = $input->username;
-            $pengguna->password = $password;
+            $pengguna->password = Hash::make($password);
             $pengguna->save();
             
             return response('true');
@@ -110,7 +111,7 @@ class KelurahanController extends Controller
         try {
             $password = "12345678";
             $pengguna = User::find($username);
-            $pengguna->password = $password;
+            $pengguna->password = Hash::make($password);
             $pengguna->save();
 
             return response('true');
@@ -151,7 +152,7 @@ class KelurahanController extends Controller
         try {
             $sandi = User::find($user);
 
-            if ($cek['sandi'] == $sandi->password) {
+            if (Hash::check($cek['sandi'], $sandi->password)) {
                 return response('ada');
             } else {
                 return response('takada');
@@ -170,7 +171,7 @@ class KelurahanController extends Controller
 
         try {
             $sandiBaru = User::find($user);
-            $sandiBaru->password = $request['sandiBaru'];
+            $sandiBaru->password = Hash::make($request['sandiBaru']);
             $sandiBaru->save();
 
             return response('true');

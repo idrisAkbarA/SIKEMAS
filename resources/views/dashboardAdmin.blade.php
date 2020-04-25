@@ -4,6 +4,10 @@
     Dashboard Admin
 @endsection
 
+@section('search')
+    
+@endsection
+
 @section('dashboardadmin')
     bilu
 @endsection

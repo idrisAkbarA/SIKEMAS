@@ -78,6 +78,8 @@
         <v-app-bar app color="#e3f3ff" flat dense>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>@yield('halaman')</v-toolbar-title>
+            <v-spacer></v-spacer>
+            @yield('search')
             <v-progress-linear :active="loading" indeterminate absolute bottom color="light-blue darken-1">
             </v-progress-linear>
         </v-app-bar>

@@ -23,6 +23,7 @@ Route::get('/masuk', function () {
 //     return view('dashboardAdmin');
 // });
 Route::get('/admin', 'KegiatanController@admin');
+Route::get('/search', 'KegiatanController@searchAsAdmin');
 
 //* FORM KEGIATAN
 Route::get('/formkegiatan', function () {
