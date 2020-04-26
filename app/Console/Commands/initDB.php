@@ -41,6 +41,7 @@ class initDB extends Command
      */
     public function handle()
     {
+        $this->call("migrate:fresh");
         $listKelurahan=[
             'Air Hitam',
             'Bandar Raya',
@@ -83,7 +84,7 @@ class initDB extends Command
         $decodedPeserta = json_decode($peserta,true);
         $kumpulanPeserta = [];
         
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=0; $i < 50; $i++) { 
             $faker = Faker::create('id_ID');
             $kegiatan = new kegiatan;
             $kegiatan->nama_kel = $listKelurahan[rand(0,6)];
@@ -105,13 +106,14 @@ class initDB extends Command
             $kegiatan->foto3 = "-";
             $kegiatan->foto4 = "-";
 
-            for ($i=0; $i < rand(5,10) ; $i++) { 
+            for ($j=0; $j < rand(5,10) ; $j++) { 
                 array_push($kumpulanPeserta,$peserta[rand(0,19)]);
             }
 
             // $kegiatan->peserta = "[]";
             $kegiatan->peserta = json_encode($kumpulanPeserta,true);
             $kegiatan->save();
+            $kumpulanPeserta =[];
         }
     }
 }

@@ -44,12 +44,14 @@ export default {
             });
         },
         liveSearch(){
+            this.stringKegiatan = [];
             var ini = this;
             axios.get('/search', {
                 params:{
                 search: ini.search,}
             })
             .then(function (response) {
+                ini.stringKegiatan = [];
                 console.log(response.data);
                 ini.kegiatan = response.data;
             

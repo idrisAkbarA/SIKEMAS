@@ -2381,12 +2381,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     liveSearch: function liveSearch() {
+      this.stringKegiatan = [];
       var ini = this;
       axios.get('/search', {
         params: {
           search: ini.search
         }
       }).then(function (response) {
+        ini.stringKegiatan = [];
         console.log(response.data);
         ini.kegiatan = response.data;
         ini.kegiatan.forEach(function (element) {
@@ -109186,8 +109188,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
