@@ -172,6 +172,7 @@
         </v-container>
       </v-card>
     </v-container>
+    <detailpeserta :index="index"v-model="dialogKet" :data="pesertaIndexed"></detailpeserta>
   </div>
 </template>
 
@@ -196,6 +197,8 @@ export default {
   },
   data() {
     return {
+        index:null,
+        pesertaIndexed:{},
         field_ket: '',
         dialogKet: false,
         sheet: false,
@@ -243,8 +246,10 @@ export default {
       this.dialogKet = true;
     },
     detail(item) {
-      const index = this.peserta.indexOf(item);
-      this.sheet = true;
+      this.index = this.peserta.indexOf(item);
+      // console.log(item);
+      this.pesertaIndexed = item;
+      this.dialogKet = true;
     }
   }
 };

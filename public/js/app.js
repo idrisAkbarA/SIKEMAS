@@ -2612,12 +2612,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: ""
   },
   data: function data() {
     return {
+      index: null,
+      pesertaIndexed: {},
       field_ket: '',
       dialogKet: false,
       sheet: false,
@@ -2659,8 +2662,10 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogKet = true;
     },
     detail: function detail(item) {
-      var index = this.peserta.indexOf(item);
-      this.sheet = true;
+      this.index = this.peserta.indexOf(item); // console.log(item);
+
+      this.pesertaIndexed = item;
+      this.dialogKet = true;
     }
   }
 });
@@ -2765,11 +2770,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    value: null,
+    data: {},
+    index: null // siapa tau ada gunanya
+
+  },
+  model: {
+    prop: "value",
+    event: "dialogClicked"
+  },
+  computed: {
+    dialog: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(value) {
+        this.$emit("dialogClicked", value);
+      }
+    }
+  },
   data: function data() {
-    return {
-      dialog: true
-    };
+    return {};
   }
 });
 
@@ -52308,7 +52335,18 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("detailpeserta", {
+        attrs: { index: _vm.index, data: _vm.pesertaIndexed },
+        model: {
+          value: _vm.dialogKet,
+          callback: function($$v) {
+            _vm.dialogKet = $$v
+          },
+          expression: "dialogKet"
+        }
+      })
     ],
     1
   )
@@ -52364,7 +52402,7 @@ var render = function() {
                       staticClass: "headline grey lighten-2",
                       attrs: { "primary-title": "" }
                     },
-                    [_vm._v("\n                Detail Peserta\n            ")]
+                    [_vm._v("\n          Detail Peserta\n        ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -52394,7 +52432,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.nik))]
                                       )
                                     ],
                                     1
@@ -52427,7 +52465,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.nama))]
                                       )
                                     ],
                                     1
@@ -52466,7 +52504,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.jk))]
                                       )
                                     ],
                                     1
@@ -52499,7 +52537,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.alamat))]
                                       )
                                     ],
                                     1
@@ -52538,7 +52576,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.hp))]
                                       )
                                     ],
                                     1
@@ -52571,7 +52609,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-title",
                                         { staticClass: "body-1" },
-                                        [_vm._v("1223445523")]
+                                        [_vm._v(_vm._s(_vm.data.pekerjaan))]
                                       )
                                     ],
                                     1
@@ -108857,8 +108895,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
