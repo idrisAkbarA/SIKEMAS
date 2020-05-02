@@ -1,15 +1,15 @@
 @extends('layouts.base')
 
 @section('halaman')
-    Peserta
+    Detail Peserta
 @endsection
 
-@section('peserta')
+@section('detail')
     bilu
 @endsection
 
 @section('content')
-<peserta data="{{$peserta}}"></peserta>
+<detailpeserta></detailpeserta>
 @endsection
 
 <style>

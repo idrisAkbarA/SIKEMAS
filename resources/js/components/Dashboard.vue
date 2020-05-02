@@ -1,7 +1,15 @@
 <template>
     <div>
-        <v-container class="mt-7">
-            <v-row>
+        <v-container>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+                @keyup="liveSearch()"
+            ></v-text-field>
+            <v-row class="mt-7">
                 <v-col>
                     <v-card elevation="5">
                         <v-card class="v-sheet--offset mx-auto" color="gradient" elevation="9"
@@ -68,6 +76,7 @@
         data() {
             return {
                 kegiatan: [],
+                search:'',
             }
         },
         created() {
@@ -83,7 +92,24 @@
                 var id = id_kegiatan;
                 console.log(id);
                 window.location.href = "/detail/"+id;
-            }  
+            },
+            liveSearch(){
+            this.stringKegiatan = [];
+            var ini = this;
+            axios.get('/cari', {
+                params:{
+                search: ini.search,}
+            })
+            .then(function (response) {
+                ini.stringKegiatan = [];
+                console.log(response.data);
+                ini.kegiatan = response.data;
+            
+                ini.kegiatan.forEach(element => {
+                ini.stringKegiatan.push(JSON.stringify(element));
+            });
+        })
+    }  
         },
     }
 

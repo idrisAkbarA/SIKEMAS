@@ -142,44 +142,16 @@
                 ></v-text-field>
               </v-toolbar>
             </template>
-            <template v-slot:item.ket="{item}">
-              <v-btn icon @click="ket(item)">
-                <v-icon>edit</v-icon>
-              </v-btn>
-            </template>
-            <template v-slot:item.kegiatan="{item}">
-              <v-btn icon @click="listKegiatan(item)">
-                <v-icon>mdi-view-list</v-icon>
+            <template v-slot:item.detail="{item}">
+              <v-btn text small @click="detail(item)">
+                Detail
               </v-btn>
             </template>
             <template v-slot:no-data>
               <p>Data belum tersedia</p>
             </template>
           </v-data-table>
-          <!-- Dialog tambah ket -->
-          <div class="text-center">
-            <v-dialog v-model="dialogKet" width="400">
-              <v-card>
-
-                <v-text-field
-                  v-model="field_ket"
-                  label="Tambah Keterangan"
-                  single-line
-                  hide-details
-                ></v-text-field>
-
-                <v-card-actions>
-                  <v-btn @click="dialogKet = false" color="red" text>batal</v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" dark @click="dialogKet = false,deleteConfirmed()">
-                    Simpan
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-          <!-- Akhir -->
-          <!-- sheet list kegiatan -->
+          <!-- sheet list detail peserta -->
           <v-bottom-sheet v-model="sheet">
             <v-list>
               <v-subheader>Open in</v-subheader>
@@ -243,33 +215,8 @@ export default {
             value: "nama"
             },
             {
-            text: "Jenis Kelamin",
-            sortable: false,
-            value: "jk"
-            },
-            {
-            text: "Alamat",
-            sortable: false,
-            value: "alamat"
-            },
-            {
-            text: "No. HP",
-            sortable: false,
-            value: "hp"
-            },
-            {
-            text: "Pekerjaan",
-            sortable: false,
-            value: "pekerjaan"
-            },
-            {
-            text: "Keterangan",
-            value: "ket",
-            sortable: false
-            },
-            {
-            text: "Kegiatan",
-            value: "kegiatan",
+            text: "Detail",
+            value: "detail",
             sortable: false
             }
             ],
@@ -295,7 +242,7 @@ export default {
       // this.ketItem = Object.assign({}, item);
       this.dialogKet = true;
     },
-    listKegiatan(item) {
+    detail(item) {
       const index = this.peserta.indexOf(item);
       this.sheet = true;
     }

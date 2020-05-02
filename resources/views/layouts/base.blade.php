@@ -56,6 +56,15 @@
                         <v-list-item-title class="font-weight-medium body-2">Kegiatan</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                </v-list-item>
+                <v-list-item @click="peserta()" class="@yield('peserta')">
+                    <v-list-item-action>
+                        <v-icon>mdi-account-group</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-medium body-2">Peserta</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
                 <v-list-item @click="pengguna()" class="@yield('pengguna')">
                     <v-list-item-action>
                         <v-icon>mdi-account</v-icon>

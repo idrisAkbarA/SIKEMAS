@@ -29,12 +29,12 @@ Vue.use(VeeValidate, { locale: "id" });
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('dashboardadmin', require('./components/DashboardAdmin.vue').default);
-// Vue.component('kegiatan', require('./components/Kegiatan.vue').default);
 Vue.component('formkegiatan', require('./components/FormKegiatan.vue').default);
 Vue.component('ubahsandi', require('./components/UbahSandi.vue').default);
 Vue.component('detail', require('./components/Detail.vue').default);
 Vue.component('akunpengguna', require('./components/AkunPengguna.vue').default);
 Vue.component('peserta', require('./components/Peserta.vue').default);
+Vue.component('detailpeserta', require('./components/DetailPeserta.vue').default);
 Vue.component('cardKel', require('./components/cardKel.vue').default);
 
 /**
@@ -72,6 +72,11 @@ const app = new Vue({
         formkegiatan(){
             this.firstFunction(function() {
                 window.location.href = '/formkegiatan';
+            });
+        },
+        peserta(){
+            this.firstFunction(function() {
+                window.location.href = '/peserta';
             });
         },
         pengguna(){

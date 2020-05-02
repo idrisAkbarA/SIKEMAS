@@ -20,6 +20,17 @@ class KegiatanController extends Controller
         $kegiatan = kegiatan::where('nama_kel', $user)->get();
         return view('dashboard')->with('kegiatan', $kegiatan)->with('user', $user);
     }
+    public function searchAsUser(request $request)
+    {
+        // $user = Auth::User()->username;
+        $user = "Air Hitam";
+
+        $search = $request->search;
+        $kegiatan = kegiatan::where('nama_kel', $user)
+                                ->where('nama_kegiatan', 'like','%'.$search.'%')
+                                ->get();
+        return $kegiatan;
+    }
  
     public function edit(request $request)
     {

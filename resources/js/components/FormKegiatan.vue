@@ -13,11 +13,11 @@
                         <v-stepper-content step="1">
                             <v-form>
                                 <v-container>
-                                    <v-text-field name="nama_kegiatan" v-model="nama_kegiatan" label="Nama Kegiatan" outlined dense v-validate="'required'">
+                                    <v-text-field name="nama kegiatan" v-model="nama_kegiatan" label="Nama Kegiatan"
+                                        outlined dense v-validate="'required'">
                                     </v-text-field>
-                                    <span 
-                                    v-show="errors.has('nama_kegiatan')">
-                                    {{errors.first('nama_kegiatan')}}
+                                    <span v-show="errors.has('nama kegiatan')">
+                                        {{errors.first('nama kegiatan')}}
                                     </span>
                                     <v-row style="margin-top:-15px">
                                         <v-col cols="12" lg="6" md="6" sm="12">

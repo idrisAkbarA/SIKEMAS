@@ -34,11 +34,13 @@ Route::get('/formkegiatan', function () {
 Route::get('/dashboard', 'KegiatanController@index');
 Route::post('/formkegiatan', 'KegiatanController@store');
 Route::get('/detail/{id}', 'KegiatanController@detail');
+Route::get('/cari', 'KegiatanController@searchAsUser');
 
 //* PESERTA
-Route::get('/peserta', function () {
-    return view('peserta');
+Route::get('/detailpeserta', function () {
+    return view('detailPeserta');
 });
+Route::get('/peserta', 'PesertaController@index');
 
 //* AKUN PENGGUNA
 Route::get('/pengguna', 'KelurahanController@index');

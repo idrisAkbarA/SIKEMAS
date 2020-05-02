@@ -140,20 +140,6 @@
     </div>
 </template>
 
-<style scoped>
-    .gradient {
-        background: #267DFF;
-        background: -webkit-linear-gradient(to bottom right, #267DFF, #6dd5ed);
-        background: linear-gradient(to bottom right, #267DFF, #6dd5ed);
-    }
-
-    .v-sheet--offset {
-        padding: 5px;
-        top: -24px;
-        position: relative;
-    }
-
-</style>
 
 <script>
     export default {

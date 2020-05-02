@@ -15,6 +15,7 @@ class PesertaController extends Controller
     public function index()
     {
         //
+        return view('peserta')->with('peserta', peserta::all());
     }
 
     /**
