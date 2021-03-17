@@ -80,8 +80,13 @@ class initDB extends Command
         }
         echo "peserta created \n\n";
 
-        $peserta = peserta::select('nik','nama','jk','alamat','hp','pekerjaan')->get();
-        $decodedPeserta = json_decode($peserta,true);
+        $peserta = peserta::select('nik','nama','jk','alamat','hp','pekerjaan')->get()->toArray();
+        $finalPeserta = [];
+        for ($i=0; $i < sizeof($peserta) ; $i++) { 
+            $temp = array_merge($peserta[$i], ['ket'=>'-']); //gabungkan isi array peserta ke $i dengan key keterangan
+            array_push($finalPeserta, $temp); // masukkan peserta yang sudah ditambah keterangan ke dalam satu array
+        }
+        // $decodedPeserta = json_decode($peserta,true);
         $kumpulanPeserta = [];
         
         for ($i=0; $i < 50; $i++) { 
@@ -107,7 +112,7 @@ class initDB extends Command
             $kegiatan->foto4 = "-";
 
             for ($j=0; $j < rand(5,10) ; $j++) { 
-                array_push($kumpulanPeserta,$peserta[rand(0,19)]);
+                array_push($kumpulanPeserta,$finalPeserta[rand(0,19)]);
             }
 
             // $kegiatan->peserta = "[]";

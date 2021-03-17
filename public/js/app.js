@@ -2295,6 +2295,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: "",
@@ -2303,7 +2334,51 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       kegiatan: [],
-      search: ''
+      search: '',
+      items: [{
+        value: null,
+        monthName: 'Bulan'
+      }, {
+        value: '01',
+        monthName: 'Januari'
+      }, {
+        value: '02',
+        monthName: 'Februari'
+      }, {
+        value: '03',
+        monthName: 'Maret'
+      }, {
+        value: '04',
+        monthName: 'April'
+      }, {
+        value: '05',
+        monthName: 'Mei'
+      }, {
+        value: '06',
+        monthName: 'Juni'
+      }, {
+        value: '07',
+        monthName: 'Juli'
+      }, {
+        value: '08',
+        monthName: 'Agustus'
+      }, {
+        value: '09',
+        monthName: 'September'
+      }, {
+        value: '10',
+        monthName: 'Oktober'
+      }, {
+        value: '11',
+        monthName: 'November'
+      }, {
+        value: '12',
+        monthName: 'Desember'
+      }],
+      cari: {
+        tahun: null,
+        bulan: null
+      }
     };
   },
   created: function created() {
@@ -2326,8 +2401,23 @@ __webpack_require__.r(__webpack_exports__);
           search: ini.search
         }
       }).then(function (response) {
+        ini.stringKegiatan = []; // console.log(response.data);
+
+        ini.kegiatan = response.data;
+        ini.kegiatan.forEach(function (element) {
+          ini.stringKegiatan.push(JSON.stringify(element));
+        });
+      });
+    },
+    cariBulanTahun: function cariBulanTahun() {
+      var ini = this;
+      axios.get('/cariBulanTahunUser', {
+        params: {
+          cari: ini.cari
+        }
+      }).then(function (response) {
+        // console.log(response.data);
         ini.stringKegiatan = [];
-        console.log(response.data);
         ini.kegiatan = response.data;
         ini.kegiatan.forEach(function (element) {
           ini.stringKegiatan.push(JSON.stringify(element));
@@ -2595,24 +2685,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: ""
@@ -2623,7 +2695,6 @@ __webpack_require__.r(__webpack_exports__);
       pesertaIndexed: {},
       field_ket: '',
       dialogKet: false,
-      sheet: false,
       ketIndex: null,
       search: "",
       peserta: [],
@@ -2772,8 +2843,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     value: null,
@@ -2783,15 +2852,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   model: {
     prop: "value",
-    event: "dialogClicked"
+    event: "sheetClicked"
   },
   computed: {
-    dialog: {
+    sheet: {
       get: function get() {
         return this.value;
       },
       set: function set(value) {
-        this.$emit("dialogClicked", value);
+        this.$emit("sheetClicked", value);
       }
     }
   },
@@ -3351,6 +3420,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      index: null,
+      pesertaIndexed: {},
+      dialogKet: false,
       search: '',
       headers: [{
         text: 'NIK',
@@ -3378,6 +3450,12 @@ __webpack_require__.r(__webpack_exports__);
     initialize: function initialize() {
       // console.log(this.$props.data);
       this.peserta = JSON.parse(this.$props.data); // console.log(this.peserta);
+    },
+    detail: function detail(item) {
+      this.index = this.peserta.indexOf(item); // console.log(item);
+
+      this.pesertaIndexed = item;
+      this.dialogKet = true;
     }
   }
 });
@@ -51506,26 +51584,131 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c("v-text-field", {
-            attrs: {
-              "append-icon": "mdi-magnify",
-              label: "Search",
-              "single-line": "",
-              "hide-details": ""
-            },
-            on: {
-              keyup: function($event) {
-                return _vm.liveSearch()
-              }
-            },
-            model: {
-              value: _vm.search,
-              callback: function($$v) {
-                _vm.search = $$v
-              },
-              expression: "search"
-            }
-          }),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-container",
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "6", sm: "1", md: "2" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              dense: "",
+                              "prepend-inner-icon": "event",
+                              outlined: "",
+                              label: "Tahun",
+                              "hide-details": "auto"
+                            },
+                            model: {
+                              value: _vm.cari.tahun,
+                              callback: function($$v) {
+                                _vm.$set(_vm.cari, "tahun", $$v)
+                              },
+                              expression: "cari.tahun"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "6", sm: "1", md: "2" } },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              outlined: "",
+                              dense: "",
+                              items: _vm.items,
+                              "item-text": "monthName"
+                            },
+                            model: {
+                              value: _vm.cari.bulan,
+                              callback: function($$v) {
+                                _vm.$set(_vm.cari, "bulan", $$v)
+                              },
+                              expression: "cari.bulan"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "primary",
+                              attrs: { dark: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.cariBulanTahun()
+                                }
+                              }
+                            },
+                            [
+                              _c("v-icon", { attrs: { left: "" } }, [
+                                _vm._v(
+                                  "\n                                search\n                            "
+                                )
+                              ]),
+                              _vm._v(
+                                "\n                            Cari\n                        "
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "1", md: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              dense: "",
+                              "prepend-inner-icon": "search",
+                              outlined: "",
+                              label: "Cari Kegiatan",
+                              "hide-details": "auto"
+                            },
+                            on: {
+                              keyup: function($event) {
+                                return _vm.liveSearch()
+                              }
+                            },
+                            model: {
+                              value: _vm.search,
+                              callback: function($$v) {
+                                _vm.search = $$v
+                              },
+                              expression: "search"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-row",
@@ -52268,65 +52451,7 @@ var render = function() {
                         proxy: true
                       }
                     ])
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-bottom-sheet",
-                    {
-                      model: {
-                        value: _vm.sheet,
-                        callback: function($$v) {
-                          _vm.sheet = $$v
-                        },
-                        expression: "sheet"
-                      }
-                    },
-                    [
-                      _c(
-                        "v-list",
-                        [
-                          _c("v-subheader", [_vm._v("Open in")]),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sheet = false
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "v-list-item-avatar",
-                                [
-                                  _c(
-                                    "v-avatar",
-                                    { attrs: { size: "32px", tile: "" } },
-                                    [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "`https://cdn.vuetifyjs.com/images/bottom-sheets/keep.img`",
-                                          alt: ""
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("v-list-item-title", [_vm._v("Keep")])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
+                  })
                 ],
                 1
               )
@@ -52381,15 +52506,15 @@ var render = function() {
         "v-container",
         [
           _c(
-            "v-dialog",
+            "v-bottom-sheet",
             {
-              attrs: { width: "500" },
+              attrs: { inset: "" },
               model: {
-                value: _vm.dialog,
+                value: _vm.sheet,
                 callback: function($$v) {
-                  _vm.dialog = $$v
+                  _vm.sheet = $$v
                 },
-                expression: "dialog"
+                expression: "sheet"
               }
             },
             [
@@ -52408,214 +52533,183 @@ var render = function() {
                   _c(
                     "v-container",
                     [
-                      _c(
-                        "v-row",
-                        [
-                          _c(
-                            "v-col",
-                            { staticClass: "py-0" },
-                            [
-                              _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("NIK")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.nik))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { staticClass: "py-0" },
-                            [
-                              _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("Nama")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.nama))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "py-0" },
+                          [
+                            _c(
+                              "v-list-item",
+                              [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "subtitle-2 grey--text" },
+                                      [_vm._v("NIK")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-title",
+                                      { staticClass: "body-1" },
+                                      [_vm._v(_vm._s(_vm.data.nik))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "py-0" },
+                          [
+                            _c(
+                              "v-list-item",
+                              [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "subtitle-2 grey--text" },
+                                      [_vm._v("Nama")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-title",
+                                      { staticClass: "body-1" },
+                                      [_vm._v(_vm._s(_vm.data.nama))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "py-0" },
+                          [
+                            _c(
+                              "v-list-item",
+                              [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "subtitle-2 grey--text" },
+                                      [_vm._v("Jenis Kelamin")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-title",
+                                      { staticClass: "body-1" },
+                                      [_vm._v(_vm._s(_vm.data.jk))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "py-0" },
+                          [
+                            _c(
+                              "v-list-item",
+                              [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "subtitle-2 grey--text" },
+                                      [_vm._v("No. Hp")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-title",
+                                      { staticClass: "body-1" },
+                                      [_vm._v(_vm._s(_vm.data.hp))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "py-0" },
+                          [
+                            _c(
+                              "v-list-item",
+                              [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "subtitle-2 grey--text" },
+                                      [_vm._v("Pekerjaan")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-title",
+                                      { staticClass: "body-1" },
+                                      [_vm._v(_vm._s(_vm.data.pekerjaan))]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
-                        "v-row",
+                        "v-list-item",
                         [
                           _c(
-                            "v-col",
-                            { staticClass: "py-0" },
+                            "v-list-item-content",
                             [
                               _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("Jenis Kelamin")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.jk))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { staticClass: "py-0" },
-                            [
+                                "div",
+                                { staticClass: "subtitle-2 grey--text" },
+                                [_vm._v("Alamat")]
+                              ),
+                              _vm._v(" "),
                               _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("Alamat")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.alamat))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-row",
-                        [
-                          _c(
-                            "v-col",
-                            { staticClass: "py-0" },
-                            [
-                              _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("No. Hp")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.hp))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { staticClass: "py-0" },
-                            [
-                              _c(
-                                "v-list-item",
-                                [
-                                  _c(
-                                    "v-list-item-content",
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "subtitle-2 grey--text"
-                                        },
-                                        [_vm._v("Pekerjaan")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-title",
-                                        { staticClass: "body-1" },
-                                        [_vm._v(_vm._s(_vm.data.pekerjaan))]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
+                                "v-list-item-title",
+                                { staticClass: "body-1" },
+                                [_vm._v(_vm._s(_vm.data.alamat))]
                               )
                             ],
                             1
@@ -54150,7 +54244,7 @@ var render = function() {
                         attrs: { text: "", small: "" },
                         on: {
                           click: function($event) {
-                            return _vm.detailItem(item)
+                            return _vm.detail(item)
                           }
                         }
                       },
@@ -54169,7 +54263,16 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _c("detailpeserta")
+          _c("detailpeserta", {
+            attrs: { index: _vm.index, data: _vm.pesertaIndexed },
+            model: {
+              value: _vm.dialogKet,
+              callback: function($$v) {
+                _vm.dialogKet = $$v
+              },
+              expression: "dialogKet"
+            }
+          })
         ],
         1
       )
@@ -108895,8 +108998,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! A:\Programming\Web-Root\sikemas\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\pemrograman\APK\Web-Root\SIKEMAS\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

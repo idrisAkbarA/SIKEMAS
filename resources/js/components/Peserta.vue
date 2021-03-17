@@ -12,7 +12,7 @@
                     </v-toolbar>
                 </template>
                 <template v-slot:item.detail="{ item }">
-                    <v-btn text small @click="detailItem(item)">
+                    <v-btn text small @click="detail(item)">
                         Detail
                     </v-btn>
                 </template>
@@ -21,7 +21,7 @@
                 </template>
             </v-data-table>
             <!-- component dialog detail peserta -->
-            <detailpeserta ></detailpeserta>
+            <detailpeserta :index="index" v-model="dialogKet" :data="pesertaIndexed"></detailpeserta>
         </v-container>
     </div>
 </template>
@@ -33,6 +33,9 @@
             data: "",
         },
         data: () => ({
+            index:null,
+            pesertaIndexed:{},
+            dialogKet: false,
             search: '',
             headers: [
                 {
@@ -68,6 +71,12 @@
                 this.peserta = JSON.parse(this.$props.data);
                 // console.log(this.peserta);
             },
+            detail(item) {
+                this.index = this.peserta.indexOf(item);
+                // console.log(item);
+                this.pesertaIndexed = item;
+                this.dialogKet = true;
+            }
         },
     }
 

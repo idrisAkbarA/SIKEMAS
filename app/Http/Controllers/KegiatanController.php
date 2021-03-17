@@ -31,11 +31,48 @@ class KegiatanController extends Controller
                                 ->get();
         return $kegiatan;
     }
- 
-    public function edit(request $request)
+    public function cariBulanTahunUser(request $request)
     {
-        //
+        // $user = Auth::User()->username;
+        $user = "Air Hitam";
+
+        $cari = json_decode($request['cari'],true);
+        $tahun = $cari['tahun'];
+        $bulan = $cari['bulan'];
+        if ($tahun!=null && $bulan==null) {
+            $kegiatan = kegiatan::where('nama_kel', $user)
+                                ->whereYear('tanggal_dari', $tahun)
+                                ->get();
+            return $kegiatan;
+        } elseif ($tahun==null && $bulan!=null) {
+            $kegiatan = kegiatan::where('nama_kel', $user)
+                                ->whereMonth('tanggal_dari', $bulan)
+                                ->get();
+            return $kegiatan;
+        }elseif ($tahun!=null && $bulan!=null) {
+            $kegiatan = kegiatan::where('nama_kel', $user)
+                                ->whereYear('tanggal_dari', $tahun)
+                                ->whereMonth('tanggal_dari', $bulan)
+                                ->get();
+            return $kegiatan;
+        }else {
+            $kegiatan = kegiatan::where('nama_kel', $user)
+                                ->get();
+            return $kegiatan;
+        }
     }
+ 
+    // public function test2(request $request)
+    // {
+    //     $peserta = peserta::select('nik','nama','jk','alamat','hp','pekerjaan')->get()->toArray();
+    //     $finalPeserta = [];
+    //     for ($i=0; $i < sizeof($peserta) ; $i++) { 
+    //         $temp = array_merge($peserta[$i], ['ket'=>'-']); //gabungkan isi array peserta ke $i dengan key keterangan
+    //         array_push($finalPeserta, $temp); // masukkan peserta yang sudah ditambah keterangan ke dalam satu array
+    //     }
+
+    //     return $finalPeserta;
+    // }
 
     public function getIdKegiatanPeserta($nik,$idKegiatanBaru){
         $data = Peserta::find($nik);
@@ -129,9 +166,18 @@ class KegiatanController extends Controller
         //
     }
 
-    public function destroy(kegiatan $kegiatan)
+    public function test()
     {
-        //
+        $hari_ini = Carbon::now();
+        $pegawai = kegiatan::all();
+        $totjarak = [];
+
+        for($i=0; $i<sizeof($pegawai); $i++){
+            $jarak = $hari_ini->diffInYears($pegawai[$i]['tanggal_dari']);
+            array_push($totjarak, $jarak);
+        }
+
+        return json_encode($totjarak);
     }
 
     public function admin()
@@ -149,7 +195,7 @@ class KegiatanController extends Controller
         
         // $array= [1];
         // array_push($array,3);
-        // return $grouped_kelurahan_data;
+        // return $all_kelurahan;
         // return $grouped_kelurahan_data;  
         // return [kegiatan::where('nama_kel',$all_kelurahan[1])->get()];
         // return [$grouped_kelurahan_data,$all_kelurahan];
@@ -168,16 +214,25 @@ class KegiatanController extends Controller
                                         ->get();
             array_push($grouped_kelurahan_data, ["$all_kelurahan[$i]"=>$kelurahan_data]);
         }
-        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[1])->get());
-        // array_push($grouped_kelurahan_data,kegiatan::where('nama_kel',$all_kelurahan[0])->get());
         
-        // $array= [1];
-        // array_push($array,3);
-        // return $grouped_kelurahan_data;
-        // return $grouped_kelurahan_data;  
-        // return [kegiatan::where('nama_kel',$all_kelurahan[1])->get()];
-        // return [$grouped_kelurahan_data,$all_kelurahan];
+        return json_encode($grouped_kelurahan_data);
+    }
+    public function cariBulanTahunAdmin(Request $request)
+    {   
+        $search = $request->search;
+        $current_year  = Carbon::now()->year;
+        $all_kegiatan  = kegiatan::whereYear('created_at',$current_year)->get();
+        $all_kelurahan =  User::pluck('username');
+        $grouped_kelurahan_data=[];
+        for ($i=0; $i <sizeof($all_kelurahan) ; $i++) { 
+            $kelurahan_data = kegiatan::where('nama_kel',$all_kelurahan[$i])
+                                        ->where('nama_kegiatan', 'like','%'.$search.'%')
+                                        ->get();
+            array_push($grouped_kelurahan_data, ["$all_kelurahan[$i]"=>$kelurahan_data]);
+        }
         
         return json_encode($grouped_kelurahan_data);
     }
 }
+
+

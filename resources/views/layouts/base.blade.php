@@ -20,16 +20,20 @@
 <body>
     <v-app id="app">
         <v-navigation-drawer v-model="drawer" app floating>
-            <v-list-item two-line>
-                <v-list-item-avatar>
-                    <v-icon>mdi-home</v-icon>
-                </v-list-item-avatar>
-      
-                <v-list-item-content>
+            {{-- <v-list-item two-line>
+                    <v-img max-width="50" src="{{asset('img/logo.gif')}}">
+                    </v-img> --}}
+                <v-card class="d-flex justify-center pt-4 pr-2 pl-2" flat tile>
+                    <v-img max-width="70" src="{{asset('img/logo.gif')}}">
+                    </v-img>
+                        <v-card-text class="body-2 font-weight-bold"> SIKEMAS</v-card-title>
+                        <p class="caption"> KEC. PAYUNG SEKAKI</p>
+                    </v-card>
+                {{-- <v-list-item-content>
                   <v-list-item-title>SIKEMAS</v-list-item-title>
                   <v-list-item-subtitle>Kec. Payung Sekaki</v-list-item-subtitle>
                 </v-list-item-content>
-              </v-list-item>
+              </v-list-item> --}}
               <v-divider style="margin-top:4px"></v-divider> 
               <v-list dense>
                   <v-list-item @click="dashboardAdmin()" class="@yield('dashboardadmin')">

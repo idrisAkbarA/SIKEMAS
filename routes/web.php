@@ -35,6 +35,7 @@ Route::get('/dashboard', 'KegiatanController@index');
 Route::post('/formkegiatan', 'KegiatanController@store');
 Route::get('/detail/{id}', 'KegiatanController@detail');
 Route::get('/cari', 'KegiatanController@searchAsUser');
+Route::get('/cariBulanTahunUser', 'KegiatanController@cariBulanTahunUser');
 
 //* PESERTA
 Route::get('/detailpeserta', function () {
@@ -60,6 +61,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test', 'KegiatanController@test2');

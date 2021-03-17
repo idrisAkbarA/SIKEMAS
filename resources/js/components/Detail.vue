@@ -151,28 +151,10 @@
               <p>Data belum tersedia</p>
             </template>
           </v-data-table>
-          <!-- sheet list detail peserta -->
-          <v-bottom-sheet v-model="sheet">
-            <v-list>
-              <v-subheader>Open in</v-subheader>
-              <v-list-item @click="sheet = false">
-                <v-list-item-avatar>
-                  <v-avatar size="32px" tile>
-                    <img
-                      src="`https://cdn.vuetifyjs.com/images/bottom-sheets/keep.img`"
-                      alt=""
-                    />
-                  </v-avatar>
-                </v-list-item-avatar>
-                <v-list-item-title>Keep</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-bottom-sheet>
-          <!-- akhir -->
         </v-container>
       </v-card>
     </v-container>
-    <detailpeserta :index="index"v-model="dialogKet" :data="pesertaIndexed"></detailpeserta>
+    <detailpeserta :index="index" v-model="dialogKet" :data="pesertaIndexed"></detailpeserta>
   </div>
 </template>
 
@@ -201,7 +183,6 @@ export default {
         pesertaIndexed:{},
         field_ket: '',
         dialogKet: false,
-        sheet: false,
         ketIndex: null,
         search: "",
         peserta: [],
